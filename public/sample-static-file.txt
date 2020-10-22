@@ -1,0 +1,11 @@
+Hey there!
+
+If you are not using the sample project, use the command below to start 
+the project from scratch, this command will create the package.json 
+in the project directory.
+
+npm init --yes
+
+To set Environment Variables:
+
+-set PORT=5000

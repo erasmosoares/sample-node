@@ -1,0 +1,30 @@
+{
+  "name": "sample-node-express",
+  "version": "1.0.0",
+  "description": "This is a sample RESTful API with Express (Node.js). You can use it as a starting point for creating apis using Node.",
+  "main": "index.js",
+  "dependencies": {
+    "compression": "^1.7.4",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "helmet": "^4.1.1",
+    "joi": "^17.2.1",
+    "morgan": "^1.10.0",
+    "pug": "^3.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/erasmosoares/sample-node-express.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/erasmosoares/sample-node-express/issues"
+  },
+  "homepage": "https://github.com/erasmosoares/sample-node-express#readme"
+}
