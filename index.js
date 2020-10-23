@@ -1,4 +1,14 @@
 /**
+ * Mongoose provides a straight-forward, schema-based solution to model your application data
+ */
+const mongoose = require('mongoose');
+const connectionSting = 'mongodb+srv://erasmosoares:eden7336@cluster0.l0jos.mongodb.net/playground?retryWrites=true&w=majority';
+
+mongoose.connect(connectionSting, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false })
+    .then(() => console.log('Connected to MongoDb...'))
+    .catch(err => console.error('Could not connect to MongoDB...', err));
+
+/**
  * Express is a minimal and flexible Node.js web application framework 
  * that provides a robust set of features for web and mobile applications.
  */
