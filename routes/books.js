@@ -11,8 +11,8 @@ router.post('/', async (req, res) => {
     const { error } = validate(req.body);
     if (error) return res.status(400).send(error.details[0].message);
 
-    let book = new Book({ name: req.body.name });
-    book = await book.save();
+    const book = new Book({ name: req.body.name });
+    await book.save();
     res.send(book);
 });
 

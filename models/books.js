@@ -16,6 +16,10 @@ const Book = mongoose.model('Books', new mongoose.Schema({
  * validator for JavaScript.
  */
 const Joi = require('joi');
+
+/* Used to validate the IDs, Joi.objectId()*/
+Joi.objectId = require('joi-objectid')(Joi);
+
 function validateBook(book) {
     const schema = Joi.object({
         name: Joi.string().min(5).max(50).required()

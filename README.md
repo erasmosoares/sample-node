@@ -87,6 +87,18 @@ https://github.com/expressjs/compression
 ```
 npm i compression
 ```
+
+
+## Joi-objectid
+
+joi-objectid validates that the value is an alphanumeric string of 24 characters in length. Can be used to validate object ID.
+
+https://github.com/mkg20001/joi-objectid
+
+```
+npm i joi-objectid
+```
+
 > In production make sure to install SSL support to use HTTPS
 
 
