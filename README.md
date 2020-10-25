@@ -99,6 +99,16 @@ https://github.com/mkg20001/joi-objectid
 npm i joi-objectid
 ```
 
+## Lodash
+
+A modern JavaScript utility library delivering modularity, performance, & extras. This is the new version of underscore
+
+https://github.com/lodash/lodash
+
+```
+npm i lodash
+```
+
 > In production make sure to install SSL support to use HTTPS
 
 
