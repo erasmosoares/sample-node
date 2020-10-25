@@ -127,6 +127,16 @@ https://github.com/kelektiv/node.bcrypt.js
 ```
 npm i bcrypt
 ```
+
+## Jsonwebtoken
+
+JsonWebToken implementation for node.js
+
+https://github.com/auth0/node-jsonwebtoken#readme
+
+```
+npm i jsonwebtoken
+```
 > In production make sure to install SSL support to use HTTPS
 
 
