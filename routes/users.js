@@ -1,7 +1,9 @@
 const { User, validate } = require('../models/user');
 const express = require('express');
 const router = express.Router();
+const bcrypt = require('bcrypt');
 const _ = require('lodash');
+
 
 /* endpoint for tests purpose*/
 router.get('/', async (req, res) => {
@@ -17,6 +19,10 @@ router.post('/', async (req, res) => {
     if (user) return res.status(400).send('User already registered.');
 
     user = new User(_.pick(req.body, ['name', 'email', 'password']));
+
+    /* Hashing the password */
+    const salt = await bcrypt.genSaltSync(10);
+    user.password = await bcrypt.hash(user.password, salt);
 
     await user.save();
 

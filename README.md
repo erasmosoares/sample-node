@@ -116,9 +116,17 @@ Password complexity validation for Joi
 https://github.com/kamronbatman/joi-password-complexity
 
 ```
-npm install joi-password-complexity
+npm i joi-password-complexity
 ```
+## bcrypt
 
+bcrypt is a password-hashing function designed by Niels Provos and David Mazières, based on the Blowfish cipher 
+
+https://github.com/kelektiv/node.bcrypt.js
+
+```
+npm i bcrypt
+```
 > In production make sure to install SSL support to use HTTPS
 
 
