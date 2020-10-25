@@ -59,9 +59,11 @@ app.set('views', './views'); //defaul folder is view
 const home = require('./routes/home');
 const books = require('./routes/books');
 const users = require('./routes/users');
+const auth = require('./routes/auth');
 app.use('/', home);
 app.use('/api/books', books);
 app.use('/api/users', users);
+app.use('/api/auth', auth);
 
 /**
  * Listener and configs
