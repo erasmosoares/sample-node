@@ -42,6 +42,17 @@ app.use(cors({
 }));
 
 /**
+ * Load config module
+ */
+const config = require('config');
+
+// To export the key use the command: set _jwtPrivateKey={key_name}
+if (!config.has('jwtPrivateKey')) {
+    console.error('FATAL ERROR: jwtPrivateKey is not defined');
+    process.exit(1);
+}
+
+/**
  * Custom Middleware
  */
 const logger = require('./middleware/logger');

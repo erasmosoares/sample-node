@@ -137,6 +137,16 @@ https://github.com/auth0/node-jsonwebtoken#readme
 ```
 npm i jsonwebtoken
 ```
+
+## node-config
+
+Node.js Application Configuration
+
+https://github.com/lorenwest/node-config
+
+```
+npm i config
+```
 > In production make sure to install SSL support to use HTTPS
 
 
