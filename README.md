@@ -109,6 +109,16 @@ https://github.com/lodash/lodash
 npm i lodash
 ```
 
+## joi-password-complexity
+
+Password complexity validation for Joi
+
+https://github.com/kamronbatman/joi-password-complexity
+
+```
+npm install joi-password-complexity
+```
+
 > In production make sure to install SSL support to use HTTPS
 
 
