@@ -2,8 +2,6 @@ const { User } = require('../models/user');
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const config = require('config');
 
 router.post('/', async (req, res) => {
     const { error } = validate(req.body);
@@ -17,9 +15,8 @@ router.post('/', async (req, res) => {
     if (!validPassword) return res.status(400).send('Invalid email or password.');
 
     /* Generate a json web token */
-    const token = jwt.sign({ _id: user._id }, config.get('jwtPrivateKey'), { expiresIn: '1h' });
+    const token = user.generateAuthToken();
     res.send(token);
-
 });
 
 /**

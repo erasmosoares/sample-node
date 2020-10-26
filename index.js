@@ -43,17 +43,19 @@ app.use(cors({
 
 /**
  * Load config module
+ * To use different configuration you can change the NODE_ENV environment variable: 
+ * $env:NODE_ENV={default,development,production}
  */
 const config = require('config');
 
-// To export the key use the command: set _jwtPrivateKey={key_name}
-if (!config.has('jwtPrivateKey')) {
+// To export the key use the command: $env:_jwtPrivateKey={key_name}
+if (!config.get('jwtPrivateKey')) {
     console.error('FATAL ERROR: jwtPrivateKey is not defined');
     process.exit(1);
 }
 
 /**
- * Custom Middleware
+ * Custom Middleware 
  */
 const logger = require('./middleware/logger');
 app.use(logger);

@@ -2,14 +2,15 @@
  * Define Mongoose Model Schema
  */
 const mongoose = require('mongoose');
-const Book = mongoose.model('Books', new mongoose.Schema({
+const bookSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
         minlength: 5,
         maxlength: 50
     }
-}));
+})
+const Book = mongoose.model('Books', bookSchema);
 
 /**
  * The most powerful schema description language and data 

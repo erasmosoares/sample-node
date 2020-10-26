@@ -4,7 +4,6 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 const _ = require('lodash');
 
-
 /* endpoint for tests purpose*/
 router.get('/', async (req, res) => {
     const users = await User.find().sort('name');
@@ -26,7 +25,9 @@ router.post('/', async (req, res) => {
 
     await user.save();
 
-    res.send(_.pick(user, ['_id', 'name', 'email']));
+    /* Add token to the header */
+    const token = user.generateAuthToken();
+    res.header('x-auth-token', token).send(_.pick(user, ['_id', 'name', 'email']));
 });
 
 module.exports = router;
