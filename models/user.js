@@ -21,7 +21,8 @@ const userSchema = new mongoose.Schema({
         required: true,
         minlength: 5,
         maxlength: 1024
-    }
+    },
+    isAdmin: Boolean
 })
 
 const jwt = require('jsonwebtoken');
@@ -29,7 +30,7 @@ const config = require('config');
 
 // add method to the user object
 userSchema.methods.generateAuthToken = function () {
-    const token = jwt.sign({ _id: this._id }, config.get('jwtPrivateKey'), { expiresIn: '1h' });
+    const token = jwt.sign({ _id: this._id, isAdmin: this.isAdmin }, config.get('jwtPrivateKey'), { expiresIn: '1h' });
     return token;
 }
 

@@ -4,6 +4,7 @@ const router = express.Router();
 
 // protecting routes
 const auth = require('../middleware/auth');
+const admin = require('../middleware/admin');
 
 router.get('/', async (req, res) => {
     const books = await Book.find().sort('name');
@@ -29,7 +30,7 @@ router.put('/:id', auth, async (req, res) => {
     res.send(book);
 });
 
-router.delete('/:id', auth, async (req, res) => {
+router.delete('/:id', [auth, admin], async (req, res) => {
     const book = await Book.findOneAndDelete(req.params.id);
     if (!book) return res.status(404).send('The book with the given ID was not found.');
 
