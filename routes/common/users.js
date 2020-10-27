@@ -1,24 +1,27 @@
-const { User, validate } = require('../models/user');
+const { User, validate } = require('../../models/user');
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const _ = require('lodash');
 
 // protecting routes
-const auth = require('../middleware/auth');
+const auth = require('../../middleware/auth');
+
+//try catch middleware
+const asyncMiddleware = require('../../middleware/async');
 
 /* endpoint for tests purpose*/
-router.get('/', auth, async (req, res) => {
+router.get('/', auth, asyncMiddleware(async (req, res) => {
     const users = await User.find().sort('name');
     res.send(users);
-});
+}));
 
-router.get('/me', auth, async (req, res) => {
+router.get('/me', auth, asyncMiddleware(async (req, res) => {
     const user = await User.findById(req.user._id).select('-password');
     res.send(user);
-});
+}));
 
-router.post('/', async (req, res) => {
+router.post('/', asyncMiddleware(async (req, res) => {
     const { error } = validate(req.body);
     if (error) return res.status(400).send(error.details[0].message);
 
@@ -36,6 +39,6 @@ router.post('/', async (req, res) => {
     /* Add token to the header */
     const token = user.generateAuthToken();
     res.header('x-auth-token', token).send(_.pick(user, ['_id', 'name', 'email']));
-});
+}));
 
 module.exports = router;

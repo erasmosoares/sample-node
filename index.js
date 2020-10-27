@@ -69,15 +69,20 @@ app.set('views', './views'); //defaul folder is view
 /**
  * Routes
  */
-const home = require('./routes/home');
+const home = require('./routes/common/home');
+const users = require('./routes/common/users');
+const auth = require('./routes/common/auth');
 const books = require('./routes/books');
-const users = require('./routes/users');
-const auth = require('./routes/auth');
 app.use('/', home);
 app.use('/api/books', books);
 app.use('/api/users', users);
 app.use('/api/auth', auth);
 
+/**
+ * Express Error Middleware, must be called after the routes definition
+ */
+const error = require('./middleware/error');
+app.use(error);
 /**
  * Listener and configs
  */
