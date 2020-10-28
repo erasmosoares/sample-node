@@ -147,6 +147,16 @@ https://github.com/lorenwest/node-config
 ```
 npm i config
 ```
+
+## express-async-errors
+
+async/await support for ExpressJS
+
+https://github.com/davidbanham/express-async-errors#readme
+
+```
+npm i express-async-errors
+```
 > In production make sure to install SSL support to use HTTPS
 
 

@@ -1,6 +1,7 @@
 //custom middleware
 function log(req, res, next) {
-    console.log('Logging...');
+    //just for demonstration
+    //console.log('Logging...');
     next();
 };
 

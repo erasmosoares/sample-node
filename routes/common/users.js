@@ -7,21 +7,19 @@ const _ = require('lodash');
 // protecting routes
 const auth = require('../../middleware/auth');
 
-//try catch middleware
-const asyncMiddleware = require('../../middleware/async');
 
 /* endpoint for tests purpose*/
-router.get('/', auth, asyncMiddleware(async (req, res) => {
+router.get('/', auth, async (req, res) => {
     const users = await User.find().sort('name');
     res.send(users);
-}));
+});
 
-router.get('/me', auth, asyncMiddleware(async (req, res) => {
+router.get('/me', auth, async (req, res) => {
     const user = await User.findById(req.user._id).select('-password');
     res.send(user);
-}));
+});
 
-router.post('/', asyncMiddleware(async (req, res) => {
+router.post('/', async (req, res) => {
     const { error } = validate(req.body);
     if (error) return res.status(400).send(error.details[0].message);
 
@@ -39,6 +37,6 @@ router.post('/', asyncMiddleware(async (req, res) => {
     /* Add token to the header */
     const token = user.generateAuthToken();
     res.header('x-auth-token', token).send(_.pick(user, ['_id', 'name', 'email']));
-}));
+});
 
 module.exports = router;

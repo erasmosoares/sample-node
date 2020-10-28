@@ -3,10 +3,7 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 
-//try catch middleware
-const asyncMiddleware = require('../../middleware/async');
-
-router.post('/', asyncMiddleware(async (req, res) => {
+router.post('/', async (req, res) => {
     const { error } = validate(req.body);
     if (error) return res.status(400).send(error.details[0].message);
 
@@ -20,7 +17,7 @@ router.post('/', asyncMiddleware(async (req, res) => {
     /* Generate a json web token */
     const token = user.generateAuthToken();
     res.send(token);
-}));
+});
 
 /**
  * The most powerful schema description language and data 

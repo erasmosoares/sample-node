@@ -55,6 +55,12 @@ if (!config.get('jwtPrivateKey')) {
 }
 
 /**
+ * Async-errors middleware
+ * Apply try-catch to the routes
+ */
+require('express-async-errors');
+
+/**
  * Custom Middleware 
  */
 const logger = require('./middleware/logger');
