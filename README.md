@@ -157,6 +157,16 @@ https://github.com/davidbanham/express-async-errors#readme
 ```
 npm i express-async-errors
 ```
+
+## winston
+
+winston is designed to be a simple and universal logging library with support for multiple transports (stores).
+
+https://github.com/winstonjs/winston#readme
+
+```
+npm i winston
+```
 > In production make sure to install SSL support to use HTTPS
 
 

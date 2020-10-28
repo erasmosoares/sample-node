@@ -18,7 +18,8 @@
     "lodash": "^4.17.20",
     "mongoose": "^5.10.9",
     "morgan": "^1.10.0",
-    "pug": "^3.0.0"
+    "pug": "^3.0.0",
+    "winston": "^3.3.3"
   },
   "devDependencies": {},
   "scripts": {

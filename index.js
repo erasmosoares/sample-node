@@ -61,6 +61,11 @@ if (!config.get('jwtPrivateKey')) {
 require('express-async-errors');
 
 /**
+ * Winston, used for logging 
+ */
+const winston = require('winston');
+winston.add(new winston.transports.File({ filename: 'logfile.log' }));
+/**
  * Custom Middleware 
  */
 const logger = require('./middleware/logger');
