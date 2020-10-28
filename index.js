@@ -1,10 +1,26 @@
 /**
+ * Load config module
+ * To use different configuration you can change the NODE_ENV environment variable: 
+ * $env:NODE_ENV={default,development,production}
+ */
+const config = require('config');
+
+// To export the key use the command: $env:_jwtPrivateKey={key_name}
+if (!config.get('jwtPrivateKey')) {
+    console.error('FATAL ERROR: jwtPrivateKey is not defined');
+    process.exit(1);
+}
+/**
  * Mongoose provides a straight-forward, schema-based solution to model your application data
  */
 const mongoose = require('mongoose');
-const connectionSting = 'mongodb+srv://erasmosoares:eden7336@cluster0.l0jos.mongodb.net/playground?retryWrites=true&w=majority';
 
-mongoose.connect(connectionSting, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false })
+if (!config.get('connectionSting')) {
+    console.error('FATAL ERROR: connectionSting is not defined');
+    process.exit(1);
+}
+
+mongoose.connect(config.get('connectionSting'), { useUnifiedTopology: true, useNewUrlParser: true, useFindAndModify: false, useCreateIndex: true })
     .then(() => console.log('Connected to MongoDb...'))
     .catch(err => console.error('Could not connect to MongoDB...', err));
 
@@ -42,19 +58,6 @@ app.use(cors({
 }));
 
 /**
- * Load config module
- * To use different configuration you can change the NODE_ENV environment variable: 
- * $env:NODE_ENV={default,development,production}
- */
-const config = require('config');
-
-// To export the key use the command: $env:_jwtPrivateKey={key_name}
-if (!config.get('jwtPrivateKey')) {
-    console.error('FATAL ERROR: jwtPrivateKey is not defined');
-    process.exit(1);
-}
-
-/**
  * Async-errors middleware
  * Apply try-catch to the routes
  */
@@ -64,7 +67,19 @@ require('express-async-errors');
  * Winston, used for logging 
  */
 const winston = require('winston');
+/**
+ * Mongodb Transport for Winston
+ */
+require('winston-mongodb');
+
+if (!config.get('connectionSting-log')) {
+    console.error('FATAL ERROR: connectionSting-log is not defined');
+    process.exit(1);
+}
+
 winston.add(new winston.transports.File({ filename: 'logfile.log' }));
+winston.add(new winston.transports.MongoDB({ db: config.get('connectionSting-log') }));
+
 /**
  * Custom Middleware 
  */

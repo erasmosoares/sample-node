@@ -167,6 +167,16 @@ https://github.com/winstonjs/winston#readme
 ```
 npm i winston
 ```
+
+## winston-mongodb
+
+A MongoDB transport for winston.
+
+https://github.com/winstonjs/winston-mongodb
+
+```
+npm i winston-mongodb
+```
 > In production make sure to install SSL support to use HTTPS
 
 
