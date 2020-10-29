@@ -80,6 +80,13 @@ if (!config.get('connectionSting-log')) {
 winston.add(new winston.transports.File({ filename: 'logfile.log' }));
 winston.add(new winston.transports.MongoDB({ db: config.get('connectionSting-log') }));
 
+process.on('uncaughtException', (ex) => {
+    winston.error(ex.message, ex)
+
+})
+
+//throw new Error('Something failed during startup');
+
 /**
  * Custom Middleware 
  */
