@@ -19,10 +19,6 @@ router.post('/', async (req, res) => {
     res.send(token);
 });
 
-/**
- * The most powerful schema description language and data 
- * validator for JavaScript.
- */
 const Joi = require('joi');
 
 function validate(req) {

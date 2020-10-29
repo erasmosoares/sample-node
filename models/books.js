@@ -1,6 +1,3 @@
-/**
- * Define Mongoose Model Schema
- */
 const mongoose = require('mongoose');
 const bookSchema = new mongoose.Schema({
     name: {
@@ -12,10 +9,7 @@ const bookSchema = new mongoose.Schema({
 })
 const Book = mongoose.model('Books', bookSchema);
 
-/**
- * The most powerful schema description language and data 
- * validator for JavaScript.
- */
+
 const Joi = require('joi');
 
 /* Used to validate the IDs, Joi.objectId()*/

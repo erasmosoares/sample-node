@@ -1,6 +1,3 @@
-/**
- * Routes
- */
 const home = require('../routes/common/home');
 const users = require('../routes/common/users');
 const auth = require('../routes/common/auth');

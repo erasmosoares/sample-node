@@ -1,9 +1,8 @@
-/**
- * Mongoose provides a straight-forward, schema-based solution to model your application data
- */
 const mongoose = require('mongoose');
+const winston = require('winston');
+const config = require('config');
 
-module.exports = function (winston, config) {
+module.exports = function () {
 
     validateConfig(config);
 

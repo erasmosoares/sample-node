@@ -1,22 +1,11 @@
-/**
- * Mongodb Transport for Winston
- */
-require('winston-mongodb');
 
-/**
- * Async-errors middleware
- * Apply try-catch to the routes
- */
+require('winston-mongodb');
 require('express-async-errors');
 
-/**
- * HTTP request logger middleware for node.js.
- */
-const morgan = require('morgan');
+const winston = require('winston');
+const config = require('config');
 
-module.exports = function (app, winston, config) {
-
-    app.use(morgan('tiny'));
+module.exports = function () {
 
     if (!config.get('connectionSting-log')) {
         console.error('FATAL ERROR: connectionSting-log is not defined');

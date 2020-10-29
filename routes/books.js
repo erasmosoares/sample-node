@@ -8,7 +8,6 @@ const admin = require('../middleware/admin');
 
 
 router.get('/', async (req, res) => {
-    //throw new Error('Could not get the books');
     const books = await Book.find().sort('name');
     res.send(books);
 });
