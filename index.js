@@ -77,14 +77,18 @@ if (!config.get('connectionSting-log')) {
     process.exit(1);
 }
 
-winston.add(new winston.transports.File({ filename: 'logfile.log' }));
+winston.add(new winston.transports.File({ filename: 'logfile.log', handleExceptions: true }));
 winston.add(new winston.transports.MongoDB({ db: config.get('connectionSting-log') }));
 
-process.on('uncaughtException', (ex) => {
-    winston.error(ex.message, ex)
+process.on('unhandledRejection', (ex) => {
+    throw ex;
+});
 
-})
+// Simulating an unhandled promise rejection
+//const p = Promise.reject(new Error('Something failed miserably'));
+//p.then(() => console.log('Done'));
 
+// Simulating an unhandled exception
 //throw new Error('Something failed during startup');
 
 /**
