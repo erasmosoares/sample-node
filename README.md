@@ -177,6 +177,16 @@ https://github.com/winstonjs/winston-mongodb
 ```
 npm i winston-mongodb
 ```
+
+## Jest
+
+Complete and ready to set-up JavaScript testing solution.
+
+https://github.com/facebook/jest
+
+```
+npm i jest --save-dev
+```
 > In production make sure to install SSL support to use HTTPS
 
 

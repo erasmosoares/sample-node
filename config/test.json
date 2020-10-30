@@ -1,0 +1,5 @@
+{
+    "jwtPrivateKey": "123456",
+    "connectionSting": "mongodb+srv://erasmosoares:eden7336@cluster0.l0jos.mongodb.net/playground-tests?retryWrites=true&w=majority",
+    "connectionSting-log": "mongodb+srv://erasmosoares:eden7336@cluster0.l0jos.mongodb.net/playground-logs"
+}

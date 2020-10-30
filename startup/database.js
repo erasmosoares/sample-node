@@ -4,22 +4,24 @@ const config = require('config');
 
 module.exports = function () {
 
-    validateConfig(config);
+    const database = validateConfig(config);
 
-    mongoose.connect(config.get('connectionSting'), {
+    mongoose.connect(database, {
         useUnifiedTopology: true,
         useNewUrlParser: true,
         useFindAndModify: false,
         useCreateIndex: true
     })
         .then(() => {
-            winston.info('Connected to MongoDb...');
+            winston.info(`Connected to ${database}...`);
         });
 }
 
 function validateConfig(config) {
-    if (!config.get('connectionSting')) {
+    const database = config.get('connectionSting');
+    if (!database) {
         winston.error('FATAL ERROR: connectionSting is not defined');
         process.exit(1);
     }
+    return database;
 }
