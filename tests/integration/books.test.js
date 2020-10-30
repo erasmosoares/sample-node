@@ -54,4 +54,60 @@ describe('/api/books', () => {
             expect(res.status).toBe(404);
         });
     });
+
+    describe('POST /', () => {
+        let token;
+        let name;
+
+        const exec = async () => {
+            return await request(server)
+                .post('/api/books')
+                .set('x-auth-token', token)
+                .send({ name });
+        }
+
+        beforeEach(() => {
+            token = new User().generateAuthToken();
+            name = 'book1';
+        })
+
+        it('should return 401 if client is not logged in', async () => {
+            token = '';
+
+            const res = await exec();
+
+            expect(res.status).toBe(401);
+        });
+
+        it('should return 400 if book is less than 5 characters', async () => {
+            name = '1234';
+
+            const res = await exec();
+
+            expect(res.status).toBe(400);
+        });
+
+        it('should return 400 if book is more than 50 characters', async () => {
+            name = new Array(52).join('a');
+
+            const res = await exec();
+
+            expect(res.status).toBe(400);
+        });
+
+        it('should save the book if it is valid', async () => {
+            await exec();
+
+            const book = await Book.find({ name: 'book1' });
+
+            expect(book).not.toBeNull();
+        });
+
+        it('should return the book if it is valid', async () => {
+            const res = await exec();
+
+            expect(res.body).toHaveProperty('_id');
+            expect(res.body).toHaveProperty('name', 'book1');
+        });
+    });
 });

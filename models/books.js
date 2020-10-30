@@ -23,5 +23,6 @@ function validateBook(book) {
     return schema.validate(book);
 }
 
+exports.bookSchema = bookSchema;
 exports.Book = Book;
 exports.validate = validateBook;
