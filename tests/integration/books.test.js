@@ -110,4 +110,150 @@ describe('/api/books', () => {
             expect(res.body).toHaveProperty('name', 'book1');
         });
     });
+
+    describe('PUT /:id', () => {
+        let token;
+        let newName;
+        let book;
+        let id;
+
+        const exec = async () => {
+            return await request(server)
+                .put('/api/books/' + id)
+                .set('x-auth-token', token)
+                .send({ name: newName });
+        }
+
+        beforeEach(async () => {
+            book = new Book({ name: 'book1' });
+            await book.save();
+
+            token = new User().generateAuthToken();
+            id = book._id;
+            newName = 'updatedName';
+        })
+
+        it('should return 401 if client is not logged in', async () => {
+            token = '';
+
+            const res = await exec();
+
+            expect(res.status).toBe(401);
+        });
+
+        it('should return 400 if book is less than 5 characters', async () => {
+            newName = '1234';
+
+            const res = await exec();
+
+            expect(res.status).toBe(400);
+        });
+
+        it('should return 400 if book is more than 50 characters', async () => {
+            newName = new Array(52).join('a');
+
+            const res = await exec();
+
+            expect(res.status).toBe(400);
+        });
+
+        it('should return 404 if id is invalid', async () => {
+            id = 1;
+
+            const res = await exec();
+
+            expect(res.status).toBe(404);
+        });
+
+        it('should return 404 if book with the given id was not found', async () => {
+            id = mongoose.Types.ObjectId();
+
+            const res = await exec();
+
+            expect(res.status).toBe(404);
+        });
+
+        it('should update the book if input is valid', async () => {
+            await exec();
+
+            const updatedBook = await Book.findById(book._id);
+
+            expect(updatedBook.name).toBe(newName);
+        });
+
+        it('should return the updated book if it is valid', async () => {
+            const res = await exec();
+
+            expect(res.body).toHaveProperty('_id');
+            expect(res.body).toHaveProperty('name', newName);
+        });
+    });
+
+    describe('DELETE /:id', () => {
+        let token;
+        let book;
+        let id;
+
+        const exec = async () => {
+            return await request(server)
+                .delete('/api/books/' + id)
+                .set('x-auth-token', token)
+                .send();
+        }
+
+        beforeEach(async () => {
+            book = new Book({ name: 'book1' });
+            await book.save();
+
+            id = book._id;
+            token = new User({ isAdmin: true }).generateAuthToken();
+        })
+
+        it('should return 401 if client is not logged in', async () => {
+            token = '';
+
+            const res = await exec();
+
+            expect(res.status).toBe(401);
+        });
+
+        it('should return 403 if the user is not an admin', async () => {
+            token = new User({ isAdmin: false }).generateAuthToken();
+
+            const res = await exec();
+
+            expect(res.status).toBe(403);
+        });
+
+        it('should return 404 if id is invalid', async () => {
+            id = 1;
+
+            const res = await exec();
+
+            expect(res.status).toBe(404);
+        });
+
+        it('should return 404 if no book with the given id was found', async () => {
+            id = mongoose.Types.ObjectId();
+
+            const res = await exec();
+
+            expect(res.status).toBe(404);
+        });
+
+        it('should delete the book if input is valid', async () => {
+            await exec();
+
+            const bookInDb = await Book.findById(id);
+
+            expect(bookInDb).toBeNull();
+        });
+
+        it('should return the removed book', async () => {
+            const res = await exec();
+
+            expect(res.body).toHaveProperty('_id', book._id.toHexString());
+            expect(res.body).toHaveProperty('name', book.name);
+        });
+    });
 });

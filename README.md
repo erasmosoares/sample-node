@@ -187,6 +187,16 @@ https://github.com/facebook/jest
 ```
 npm i jest --save-dev
 ```
+
+## SuperTest
+
+uper-agent driven library for testing node.js HTTP servers using a fluent API.
+
+https://github.com/visionmedia/supertest
+
+```
+npm i supertest  --save-dev
+```
 > In production make sure to install SSL support to use HTTPS
 
 
