@@ -27,7 +27,11 @@
     "supertest": "^6.0.0"
   },
   "scripts": {
+    "start": "node index.js",
     "test": "jest --testEnvironment=node --watchAll --verbose --runInBand --detectOpenHandles --coverage"
+  },
+  "engines": {
+    "node": "12.17.0"
   },
   "repository": {
     "type": "git",
