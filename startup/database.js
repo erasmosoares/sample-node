@@ -18,7 +18,7 @@ module.exports = function () {
 }
 
 function validateConfig(config) {
-    const database = config.get('connectionSting');
+    const database = config.get('connectionString');
     if (!database) {
         winston.error('FATAL ERROR: connectionSting is not defined');
         process.exit(1);

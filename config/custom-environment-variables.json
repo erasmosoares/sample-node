@@ -1,3 +1,5 @@
 {
-    "jwtPrivateKey": "_jwtPrivateKey"
+    "jwtPrivateKey": "_jwtPrivateKey",
+    "connectionString": "_connectionSting",
+    "connectionString-log": "_connectionSting_log"
 }

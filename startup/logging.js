@@ -7,14 +7,14 @@ const config = require('config');
 
 module.exports = function () {
 
-    if (!config.get('connectionSting-log')) {
-        console.error('FATAL ERROR: connectionSting-log is not defined');
+    if (!config.get('connectionString-log')) {
+        console.error('FATAL ERROR: connectionString-log is not defined');
         process.exit(1);
     }
 
     winston.add(new winston.transports.Console({ colorize: true, prettyPrint: true }));
     winston.add(new winston.transports.File({ filename: 'logfile.log', handleExceptions: true }));
-    winston.add(new winston.transports.MongoDB({ db: config.get('connectionSting-log') }));
+    winston.add(new winston.transports.MongoDB({ db: config.get('connectionString-log') }));
 
     process.on('unhandledRejection', (ex) => {
         throw ex;
