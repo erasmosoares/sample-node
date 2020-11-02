@@ -1,6 +1,6 @@
 {
     "jwtPrivateKey": "",
-    "connectionString": "",
-    "connectionStringLog": "",
+    "connectionString": "mongodb+srv://erasmosoares:eden7336@cluster0.l0jos.mongodb.net/playground-tests?retryWrites=true&w=majority",
+    "connectionStringLog": "mongodb+srv://erasmosoares:eden7336@cluster0.l0jos.mongodb.net/playground-logs",
     "CorsOrigins": "*"
 }
