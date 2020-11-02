@@ -1,6 +1,6 @@
 {
     "jwtPrivateKey": "123456",
     "connectionString": "mongodb+srv://",
-    "connectionString-log": "mongodb+srv://",
+    "connectionStringLog": "mongodb+srv://",
     "CorsOrigins": "http://localhost:3000"
 }

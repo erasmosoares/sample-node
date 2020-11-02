@@ -1,6 +1,6 @@
 {
     "jwtPrivateKey": "",
     "connectionString": "",
-    "connectionString-log": "",
+    "connectionStringLog": "",
     "CorsOrigins": "http://localhost:3000"
 }
