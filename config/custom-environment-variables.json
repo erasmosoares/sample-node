@@ -1,5 +1,5 @@
 {
     "jwtPrivateKey": "_jwtPrivateKey",
     "connectionString": "_connectionString",
-    "connectionStringLog": "_connectionString_log"
+    "connectionStringLog": "_connectionStringLog"
 }
