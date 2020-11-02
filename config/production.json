@@ -1,0 +1,6 @@
+{
+    "jwtPrivateKey": "",
+    "connectionString": "",
+    "connectionString-log": "",
+    "CorsOrigins": "*"
+}
