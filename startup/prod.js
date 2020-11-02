@@ -7,7 +7,7 @@ const config = require('config');
  * CORS is responsible for allowing or not asynchronous requests 
  * from other domains.
  */
-const cors = require("cors");
+//const cors = require("cors");
 
 /**
  * Helmet helps you secure your Express apps by setting various HTTP headers.
@@ -46,9 +46,10 @@ module.exports = function (app) {
     /**
  * Enabling CORS Pre-Flight
  */
-    app.use(cors({
-        origin: [allowedOrigins],
-        methods: ["GET", "POST"],
-        allowedHeaders: ["Content-Type", "Authorization"]
-    }));
+    /*
+        app.use(cors({
+            origin: [allowedOrigins],
+            methods: ["GET", "POST"],
+            allowedHeaders: ["Content-Type", "Authorization"]
+        })); */
 }
