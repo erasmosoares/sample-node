@@ -1,6 +1,6 @@
 # Introduction
 
-This is a sample RESTful API with Express (Node.js). Complete version *
+This is a sample RESTful API with Express (Node.js). This version has mongoDb
 
 
 # Usage
