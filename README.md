@@ -1,6 +1,12 @@
 # Introduction
 
-This is a sample RESTful API with Express (Node.js). This version has mongoDb
+This is a sample RESTful API with Express (Node.js) and mongoDb. 
+
+All the configurations use environment variables, for connectionstring you need to create a cluster in mongo cloud and add to the configuration.
+
+For a simple version of this project please check:
+
+https://github.com/erasmosoares/sample-node-express
 
 
 # Usage
