@@ -21,7 +21,7 @@ This app uses two databases, one for the application itself and other for log pu
 Configure the environement variables runnig this on your terminal:
 
 ```console
-$env:_jwtPrivateKey=1234567890
+$env:_jwtPrivateKey=<your private key>
 $env:_connectionString=<your mongodb application connection string>
 $env:_connectionStringLog=<your mongodb application logs connection string>
 ```

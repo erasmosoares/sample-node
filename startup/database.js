@@ -6,15 +6,14 @@ module.exports = function () {
 
     const database = validateConfig(config);
 
+    mongoose.set('strictQuery', false);
     mongoose.connect(database, {
         useUnifiedTopology: true,
         useNewUrlParser: true,
-        useFindAndModify: false,
-        useCreateIndex: true
     })
-        .then(() => {
-            winston.info(`Connected to ${database}...`);
-        });
+    .then(() => {
+        winston.info(`Connected to ${database}...`);
+    });
 }
 
 function validateConfig(config) {
