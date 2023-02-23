@@ -1,6 +1,6 @@
 # Introduction
 
-This is a sample RESTful API with Express (Node.js) and mongoDb. 
+This is a sample RESTful API with Express (Node.js) and mongoDb.
 
 Always use environment variables for configurations, for connectionstring you need to create a cluster in mongo cloud and add to the configuration.
 
@@ -8,22 +8,116 @@ For a simple version of this project please check:
 
 https://github.com/erasmosoares/sample-node-express
 
-
 # Usage
 
-Clone this repo and install the packages: 
+Clone this repo and install the packages:
 
-```
+```console
 npm i
 ```
+
+This app uses two databases, one for the application itself and other for log purpose, please take a moment to create this two mongo dbs on your mongoDb cluster.
+
+Configure the environement variables runnig this on your terminal:
+
+```console
+$env:_jwtPrivateKey=1234567890
+$env:_connectionString=<your mongodb application connection string>
+$env:_connectionStringLog=<your mongodb application logs connection string>
+```
+
 Use nodemon to run the server:
+
 > nodemon is a tool that helps develop node.js based applications by automatically restarting the node application when file changes in the directory are detected.
 
 In your terminal console execute:
 
-```
+```console
 nodemon index.js
 ```
+
+# Testing the APIs
+
+To test the APIs you need to create an account and copy the JWT token that is generated to add into the x-auth-token header, here is an exemple:
+
+http **POST**:
+http://localhost:3000/api/auth
+
+```json
+{
+  "email": "erasmo@email.com",
+  "password": "a123456789"
+}
+```
+
+This will produce a response with the JSON web token like this:
+
+```console
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1Zjk1Y2MyZDUyNTk4NDc0NGM2NTYzYjciLCJpc0FkbWluIjp0cnVlLCJpYXQiOjE2NzcxNjcwOTcsImV4cCI6MTY3NzE3MDY5N30.BdTK1GvqM_29faFcDkdbMnpDwz1uFUtHTMoV-5OGR0s
+```
+
+Now you can make any POST calls by pasting this token into the x-auth-token header, below you can find some examples:
+
+http **GET**: Books
+http://localhost:3000/api/books
+
+```json
+[
+  {
+    "_id": "6178b4a56dd39a1aecf06e33",
+    "name": "Dead Zone 2",
+    "__v": 0
+  }
+]
+```
+
+http **GET**: Users (Need Token)
+http://localhost:3000/api/users
+
+```json
+[
+  {
+    "_id": "5f95cc2d525984744c6563b7",
+    "name": "Erasmo",
+    "email": "erasmo@email.com",
+    "password": "$2b$10$vgxLChiqX5H5aPTXywNysOLo/.3tklj7ZuWqoD3XErnJF7nsH24CS",
+    "__v": 0,
+    "isAdmin": true
+  }
+]
+```
+
+http **POST**: Books (Need Token)
+http://localhost:3000/api/books
+
+Body:
+
+```json
+{
+  "name": "Dead Zone 5"
+}
+```
+
+Response:
+
+```json
+{
+  "_id": "63f78d00916b192704e506d9",
+  "name": "Dead Zone 5",
+  "__v": 0
+}
+```
+
+There are more apis available, please check the available routes.
+
+# Integration and Unity Tests
+
+The tests were created using Jest, to run them just use the command below:
+
+```
+npm test
+```
+
 # Packages Installed
 
 ## Nodemon
@@ -33,8 +127,9 @@ Automatically restart the node app after changes
 https://github.com/remy/nodemon
 
 ```
-npm i -g nodemon 
+npm i -g nodemon
 ```
+
 ## Joi
 
 The most powerful schema description language and data validator for JavaScript.
@@ -44,6 +139,7 @@ https://github.com/sideway/joi#readme
 ```
 npm i joi
 ```
+
 ## Helmet
 
 Helmet helps you secure your Express apps by setting various HTTP headers.
@@ -94,7 +190,6 @@ https://github.com/expressjs/compression
 npm i compression
 ```
 
-
 ## Joi-objectid
 
 joi-objectid validates that the value is an alphanumeric string of 24 characters in length. Can be used to validate object ID.
@@ -124,9 +219,10 @@ https://github.com/kamronbatman/joi-password-complexity
 ```
 npm i joi-password-complexity
 ```
+
 ## bcrypt
 
-bcrypt is a password-hashing function designed by Niels Provos and David Mazières, based on the Blowfish cipher 
+bcrypt is a password-hashing function designed by Niels Provos and David Mazières, based on the Blowfish cipher
 
 https://github.com/kelektiv/node.bcrypt.js
 
@@ -203,6 +299,5 @@ https://github.com/visionmedia/supertest
 ```
 npm i supertest  --save-dev
 ```
+
 > In production make sure to install SSL support to use HTTPS
-
-
