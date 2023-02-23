@@ -110,7 +110,7 @@ Response:
 
 There are more apis available, please check the available routes.
 
-# Integration and Unity Tests
+# Integration and Unit Tests
 
 The tests were created using Jest, to run them just use the command below:
 
