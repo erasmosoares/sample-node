@@ -141,6 +141,12 @@ To install the image run the following command in the project root:
 docker build -t sample-node-app .
 ```
 
+To run the container:
+
+```
+docker run sample-node-app
+```
+
 To navigate into the image shell
 
 ```
