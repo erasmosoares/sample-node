@@ -10,6 +10,8 @@ https://github.com/erasmosoares/sample-node-express
 
 # Usage
 
+**For docker configuration please check the docker section.**
+
 Clone this repo and install the packages:
 
 ```console
@@ -116,6 +118,33 @@ The tests were created using Jest, to run them just use the command below:
 
 ```
 npm test
+```
+
+# Docker
+
+Before run docker, add the environment variables to the DockerFile after the run npm install:
+
+```docker
+FROM node:18.14.2-alpine3.17
+WORKDIR /app
+COPY . .
+RUN npm install
+
+ENV _jwtPrivateKey=<your private key>
+ENV _connectionString=<your mongodb application connection string>
+ENV _connectionStringLog=<your mongodb application logs connection string>
+```
+
+To install the image run the following command in the project root:
+
+```
+docker build -t sample-node-app .
+```
+
+To navigate into the image shell
+
+```
+docker run -it sample-node-app sh
 ```
 
 # Packages Installed
