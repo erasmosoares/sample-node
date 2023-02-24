@@ -10,7 +10,7 @@ https://github.com/erasmosoares/sample-node-express
 
 # Usage
 
-**For docker usage please jump to the docker section.**
+**For docker configuration please check the docker section.**
 
 Clone this repo and install the packages:
 
@@ -122,7 +122,7 @@ npm test
 
 # Docker
 
-Before run docker, add the environment variables to the DockerFile after the command "run npm install":
+Before run docker, add the environment variables to the DockerFile after the run npm install:
 
 ```docker
 FROM node:18.14.2-alpine3.17
@@ -141,13 +141,7 @@ To install the image run the following command in the project root:
 docker build -t sample-node-app .
 ```
 
-Next start the container:
-
-```
-docker run sample-node-app
-```
-
-Additional Info: To navigate into the image shell
+To navigate into the image shell
 
 ```
 docker run -it sample-node-app sh
