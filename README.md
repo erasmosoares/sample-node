@@ -32,7 +32,7 @@ Use nodemon to run the server:
 
 > nodemon is a tool that helps develop node.js based applications by automatically restarting the node application when file changes in the directory are detected.
 
-In your terminal console execute:
+On your terminal console execute:
 
 ```console
 nodemon index.js
@@ -122,17 +122,26 @@ npm test
 
 # Docker
 
-Before run docker, add the environment variables to the DockerFile after the run npm install:
+The project is configured to use a simple and small Linux image.
+
+Before run docker, add the environment variables to the DockerFile after the "run npm install":
 
 ```docker
-FROM node:18.14.2-alpine3.17
-WORKDIR /app
-COPY . .
-RUN npm install
-
 ENV _jwtPrivateKey=<your private key>
 ENV _connectionString=<your mongodb application connection string>
 ENV _connectionStringLog=<your mongodb application logs connection string>
+```
+
+Create a volume to store the containers:
+
+```
+docker volume create app-data
+```
+
+You also can inspect the volume with the command:
+
+```
+docker volume inspect app-data
 ```
 
 To install the image run the following command in the project root:
@@ -143,14 +152,28 @@ docker build -t sample-node-app .
 
 To run the container:
 
+**If port 80 is in use please change to another port**:
+
 ```
-docker run sample-node-app
+docker run -d -p 80:3000 -v app-data:/app/data sample-node-app
 ```
 
-To navigate into the image shell
+Now you can test the samples using the port 80 on your browser:
+
+```
+http://localhost:80/api/books
+```
+
+If you want to validate the unit tests and integration tests, you can execute the container on interact mode and run the tests:
 
 ```
 docker run -it sample-node-app sh
+```
+
+Type on the command shell the following command:
+
+```
+npm test
 ```
 
 # Packages Installed
