@@ -1,3 +1,5 @@
 {
-    "CorsOrigins": "http://localhost:3000"
+    "CorsOrigins": "http://localhost:3000",
+    "assetsBaseUrl": "http://192.168.2.14:9000/assets/",
+    "maxImageCount":3
 }

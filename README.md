@@ -28,6 +28,12 @@ $env:_connectionString=<your mongodb application connection string>
 $env:_connectionStringLog=<your mongodb application logs connection string>
 ```
 
+In assetsBaseUrl, change the IP for accessing the images to either the local machine IP or the server IP.
+
+```json
+ "assetsBaseUrl": "http://192.168.2.14:9000/assets/"
+```
+
 Use nodemon to run the server:
 
 > nodemon is a tool that helps develop node.js based applications by automatically restarting the node application when file changes in the directory are detected.
@@ -66,9 +72,13 @@ http://localhost:3000/api/books
 ```json
 [
   {
-    "_id": "6178b4a56dd39a1aecf06e33",
-    "name": "Dead Zone 2",
-    "__v": 0
+    "name": "The Shining",
+    "images": [
+      {
+        "url": "http://192.168.2.14:9000/assets/6182b19754f4189c13a65379724aed41_full.jpg",
+        "thumbnailUrl": "http://192.168.2.14:9000/assets/6182b19754f4189c13a65379724aed41_thumb.jpg"
+      }
+    ]
   }
 ]
 ```
@@ -92,20 +102,31 @@ http://localhost:3000/api/users
 http **POST**: Books (Need Token)
 http://localhost:3000/api/books
 
+To upload images you need to add the images (or not) to the request object, so you need to use form-data for the multipart/form-data request. Refer to Multer readme for more examples.
+
+https://github.com/expressjs/multer
+
+If you use postamn for the test, select the form-data option for the body and add the key name and images, for images the type should be "files
+
 Body:
 
 ```json
-{
-  "name": "Dead Zone 5"
-}
+"name": "Dead Zone 5"
+"images": "your uploaded image"
 ```
 
 Response:
 
 ```json
 {
-  "_id": "63f78d00916b192704e506d9",
   "name": "Dead Zone 5",
+  "_id": "641295046603882e59b0e216",
+  "images": [
+    {
+      "fileName": "287db9ee4e8e7fbe66215c967528bb2e",
+      "_id": "641295046603882e59b0e217"
+    }
+  ],
   "__v": 0
 }
 ```
@@ -356,6 +377,26 @@ https://github.com/visionmedia/supertest
 
 ```
 npm i supertest  --save-dev
+```
+
+## Multer
+
+Node.js middleware for handling `multipart/form-data`.
+
+https://github.com/expressjs/multer
+
+```
+npm install --save multer
+```
+
+## Sharp
+
+High performance Node.js image processing, the fastest module to resize JPEG, PNG, WebP, AVIF and TIFF images. Uses the libvips library.
+
+https://github.com/lovell/sharp
+
+```
+npm install sharp
 ```
 
 > In production make sure to install SSL support to use HTTPS

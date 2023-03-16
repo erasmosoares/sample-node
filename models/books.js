@@ -1,11 +1,12 @@
 const mongoose = require('mongoose');
-const bookSchema = new mongoose.Schema({
+const bookSchema = new mongoose.Schema({ 
     name: {
         type: String,
         required: true,
         minlength: 5,
         maxlength: 50
-    }
+    },
+    images: [{ fileName: String }]
 })
 const Book = mongoose.model('Books', bookSchema);
 
