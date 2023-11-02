@@ -28,7 +28,15 @@ $env:_connectionString=<your mongodb application connection string>
 $env:_connectionStringLog=<your mongodb application logs connection string>
 ```
 
-In assetsBaseUrl, change the IP for accessing the images to either the local machine IP or the server IP.
+On Mac, use the export command:
+
+```console
+export _jwtPrivateKey=<your private key>
+export _connectionString=<your mongodb application connection string>
+export _connectionStringLog=<your mongodb application logs connection string>
+```
+
+In assetsBaseUrl (Config folder), change the IP for accessing the images to either the local machine IP or the server IP.
 
 ```json
  "assetsBaseUrl": "http://192.168.2.14:9000/assets/"

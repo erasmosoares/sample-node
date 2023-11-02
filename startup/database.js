@@ -7,10 +7,7 @@ module.exports = function () {
     const database = validateConfig(config);
 
     mongoose.set('strictQuery', false);
-    mongoose.connect(database, {
-        useUnifiedTopology: true,
-        useNewUrlParser: true,
-    })
+    mongoose.connect(database)
     .then(() => {
         winston.info(`Connected to ${database}...`);
     });
