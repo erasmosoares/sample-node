@@ -158,6 +158,7 @@ Before run docker, add the environment variables to the DockerFile after the "ru
 ```docker
 ENV _jwtPrivateKey=<your private key>
 ENV _connectionString=<your mongodb application connection string>
+ENV _connectionStringTest=<your mongodb application connection string for integration test>
 ENV _connectionStringLog=<your mongodb application logs connection string>
 ```
 
@@ -202,6 +203,8 @@ docker run -it sample-node-app sh
 Type on the command shell the following command:
 
 ```
+NODE_ENV=test
+
 npm test
 ```
 
@@ -405,6 +408,18 @@ https://github.com/lovell/sharp
 
 ```
 npm install sharp
+```
+
+> In production make sure to install SSL support to use HTTPS
+
+## Rate limit
+
+Use to limit repeated requests to public APIs and/or endpoints such as password reset. 
+
+https://github.com/express-rate-limit/express-rate-limit
+
+```
+npm install express-rate-limit
 ```
 
 > In production make sure to install SSL support to use HTTPS

@@ -5,7 +5,7 @@ const imageResize = require("../middleware/imageResize");
 const router = express.Router();
 const config = require("config");
 const bookMapper = require("../mappers/books");
-
+const winston = require('winston');
 
 const upload = multer({
     dest: "uploads/",
@@ -19,7 +19,6 @@ const admin = require('../middleware/admin');
 // validating Idsq
 const validateObjectId = require('../middleware/validateObjectId');
 
-
 router.get('/', async (req, res) => {
     const books = await Book.find().sort('name');
     const resources = books.map(bookMapper)
@@ -27,21 +26,13 @@ router.get('/', async (req, res) => {
 });
 
 router.post('/',
-    [
-        // Order of these middleware matters.
-        // "upload" should come before other "validate" because we have to handle
-        // multi-part form data. Once the upload middleware from multer applied,
-        // request.body will be populated and we can validate it. This means
-        // if the request is invalid, we'll end up with one or more image files
-        // stored in the uploads folder. We'll need to clean up this folder
-        // using a separate process.
-        // auth,
+    [        
         upload.array("images", config.get("maxImageCount")),
-        imageResize,
+        imageResize
       ], auth, async (req, res) => {
         const { error } = validate(req.body);
         if (error){
-            console.error('Error adding book:', error.details[0].message);
+            winston.info(`Error adding book ${req.body.name }:', ${error.details[0].message}`);
             return res.status(400).send("An unexpected error occurred");
         } 
     
@@ -63,7 +54,8 @@ router.post('/',
       // Validate the request body
       const { error } = validate(req.body);
       if (error) {
-        return res.status(400).type('text').send(error.details[0].message);
+        winston.info(`Error updating book ${req.params.id}:', ${error.details[0].message}`);
+        return res.status(400).type('text').send('Error updating book');
       }
   
       // Update the book by ID
@@ -75,6 +67,7 @@ router.post('/',
   
       // Check if the book was found
       if (!book) {
+        winston.info(`Error updating book ${req.params.id}`);
         return res.status(404).type('text').send('The book with the given ID was not found.');
       }
   
@@ -82,7 +75,7 @@ router.post('/',
       res.type('json').send(book);
     } catch (err) {
       // Handle unexpected errors
-      console.error('Error updating book:', err);
+      winston.error('Error updating book:', err);
       res.status(500).type('text').send('An unexpected error occurred');
     }
   });
@@ -94,6 +87,7 @@ router.post('/',
   
       // Check if the book was found
       if (!book) {
+        winston.info(`Error deleting book ${req.params.id}`);
         return res.status(404).type('text').send('The book with the given ID was not found.');
       }
   
@@ -101,7 +95,7 @@ router.post('/',
       res.type('json').send(book);
     } catch (err) {
       // Handle unexpected errors
-      console.error('Error deleting book:', err);
+      winston.error('Error deleting book:', err);
       res.status(500).type('text').send('An unexpected error occurred');
     }
   });
@@ -113,6 +107,7 @@ router.post('/',
   
       // Check if the book was found
       if (!book) {
+        winston.info(`Error deleting book ${req.params.id}:`);
         return res.status(404).type('text').send('The book with the given ID was not found.');
       }
   
@@ -123,7 +118,7 @@ router.post('/',
       res.type('json').send(resource);
     } catch (err) {
       // Handle unexpected errors
-      console.error('Error retrieving book:', err);
+      winston.error('Error retrieving book:', err);
       res.status(500).type('text').send('An unexpected error occurred');
     }
   });

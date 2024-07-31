@@ -2,13 +2,15 @@ const { User } = require('../../models/user');
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
+const winston = require('winston');
 
 router.post('/', async (req, res) => {
     try {
       // Validate request body
       const { error } = validate(req.body);
       if (error) {
-        return res.status(400).type('text').send(error.details[0].message);
+        winston.info(`Error during authentication: ${rreq.body.email }:', ${error.details[0].message}`);
+        return res.status(400).type('text').send('Error during authentication');
       }
   
       // Find user by email
@@ -28,7 +30,7 @@ router.post('/', async (req, res) => {
       res.status(200).type('json').send(token);
     } catch (err) {
       // Handle unexpected errors
-      console.error('Error during login:', err);
+      winston.error('Error during login:', err);
       res.status(500).type('text').send('An unexpected error occurred');
     }
 });

@@ -1,5 +1,5 @@
 {
-    "name": "Production environment",
+    "name": "production",
     "jwtPrivateKey": "",
     "connectionString": "",
     "connectionStringLog": "",

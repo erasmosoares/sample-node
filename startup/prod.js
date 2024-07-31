@@ -19,29 +19,20 @@ const helmet = require('helmet');
  */
 const compression = require('compression');
 
+const rateLimiter = require('../middleware/rateLimiter');
+
 module.exports = function (app) {
     const allowedOrigins = config.get('CorsOrigins');
     if (!allowedOrigins) {
         winston.error('FATAL ERROR: CorsOrigins is not defined');
         process.exit(1);
     }
-    /**
-    app.use(helmet()); is equivalent to this:
-    app.use(helmet.contentSecurityPolicy());
-    app.use(helmet.dnsPrefetchControl());
-    app.use(helmet.expectCt());
-    app.use(helmet.frameguard());
-    app.use(helmet.hidePoweredBy());
-    app.use(helmet.hsts());
-    app.use(helmet.ieNoOpen());
-    app.use(helmet.noSniff());
-    app.use(helmet.permittedCrossDomainPolicies());
-    app.use(helmet.referrerPolicy());
-    app.use(helmet.xssFilter());
-    */
+
     app.use(helmet());
 
     app.use(compression());
+
+    app.use(rateLimiter);
 
     // export NODE_ENV=production
 

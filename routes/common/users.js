@@ -3,10 +3,10 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const _ = require('lodash');
+const winston = require('winston');
 
 // protecting routes
 const auth = require('../../middleware/auth');
-
 
 /* endpoint for tests purpose*/
 router.get('/', auth, async (req, res) => {
@@ -24,7 +24,7 @@ router.post('/', async (req, res) => {
       // Validate request body
       const { error } = validate(req.body);
       if (error) {
-        return res.status(400).type('text').send(error.details[0].message);
+        return res.status(400).type('text').send('Error connecting user');
       }
   
       // Check if user already exists
@@ -50,7 +50,7 @@ router.post('/', async (req, res) => {
       res.header('x-auth-token', token).type('json').send(_.pick(user, ['_id', 'name', 'email']));
     } catch (err) {
       // Handle unexpected errors
-      console.error('Error creating user:', err);
+      winston.error('Error authenticating user:', err);
       res.status(500).type('text').send('An unexpected error occurred');
     }
   });

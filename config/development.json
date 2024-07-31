@@ -1,5 +1,5 @@
 {
-    "name": "Developement environment",
+    "name": "development",
     "jwtPrivateKey": "",
     "connectionString": "",
     "connectionStringLog": "",
