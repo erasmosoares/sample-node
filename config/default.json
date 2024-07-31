@@ -1,4 +1,5 @@
 {
+    "name": "Default environment",
     "jwtPrivateKey": "",
     "connectionString": "",
     "connectionStringLog": "",

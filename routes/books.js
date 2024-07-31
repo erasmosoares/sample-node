@@ -46,7 +46,10 @@ router.post('/',
 
     const book = new Book({ name: req.body.name });
     
-    book.images = req.images.map((fileName) => ({ fileName: fileName }));
+    // Only process images if they are uploaded
+    if (req.files && req.files.length > 0) {
+        book.images = req.files.map((file) => ({ fileName: file.filename }));
+    }
 
     await book.save();
     res.send(book);
@@ -63,7 +66,7 @@ router.put('/:id', [auth, validateObjectId], async (req, res) => {
 });
 
 router.delete('/:id', [auth, admin, validateObjectId], async (req, res) => {
-    const book = await Book.findByIdAndRemove(req.params.id);
+    const book = await Book.findByIdAndDelete(req.params.id);
     if (!book) return res.status(404).send('The book with the given ID was not found.');
 
     res.send(book);

@@ -43,6 +43,18 @@ module.exports = function (app) {
 
     app.use(compression());
 
+    // export NODE_ENV=production
+
+    console.log(`app env: ${config.get('name')}`);
+    console.log(`node env: ${app.get('env')}`);
+    console.log('To change it use: NODE_ENV={env_name}')
+    
+ 
+    if(app.get('env') === 'development'){
+        console.log('Morgan enabled');
+    }
+    
+
     /**
  * Enabling CORS Pre-Flight
  */

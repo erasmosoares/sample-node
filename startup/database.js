@@ -2,9 +2,18 @@ const mongoose = require('mongoose');
 const winston = require('winston');
 const config = require('config');
 
-module.exports = function () {
+module.exports = function (app) {
 
-    const database = validateConfig(config);
+    let database;
+
+    if (app.get('env') === 'test'){
+        console.log('Loading tests DB');
+        database = validateConfig('connectionStringTest');        
+    } else {
+        database = validateConfig('connectionString');
+    };
+
+    
 
     mongoose.set('strictQuery', false);
     mongoose.connect(database)
@@ -13,10 +22,10 @@ module.exports = function () {
     });
 }
 
-function validateConfig(config) {
-    const database = config.get('connectionString');
+function validateConfig(configName) {
+    const database = config.get(configName);
     if (!database) {
-        winston.error('FATAL ERROR: connectionSting is not defined');
+        winston.error(`FATAL ERROR: ${configName} is not defined`);
         process.exit(1);
     }
     return database;

@@ -1,9 +1,10 @@
 {
+    "name": "Production environment",
     "jwtPrivateKey": "",
     "connectionString": "",
     "connectionStringLog": "",
+    
     "CorsOrigins": "*",
-
     "assetsBaseUrl": "http://192.168.2.14:9000/assets/",
     "maxImageCount":3
 }

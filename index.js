@@ -37,7 +37,7 @@ app.set('views', './views');
  */
 require('./startup/logging')();
 require('./startup/config')();
-require('./startup/database')();
+require('./startup/database')(app);
 require('./startup/routes')(app);
 require('./startup/prod')(app);
 

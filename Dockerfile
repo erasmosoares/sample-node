@@ -23,7 +23,9 @@ COPY . .
 # Set environments variables
 # ENV _jwtPrivateKey=<your private key>
 # ENV _connectionString=<your mongodb application connection string>
+# ENV _connectionStringTest=<your mongodb application connection string for integration tests>
 # ENV _connectionStringLog=<your mongodb application logs connection string>
+
 
 # Expose ports 
 EXPOSE 3000
