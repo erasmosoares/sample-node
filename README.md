@@ -158,6 +158,7 @@ Before run docker, add the environment variables to the DockerFile after the "ru
 ```docker
 ENV _jwtPrivateKey=<your private key>
 ENV _connectionString=<your mongodb application connection string>
+ENV _connectionStringTest=<your mongodb application connection string for integration tests>
 ENV _connectionStringLog=<your mongodb application logs connection string>
 ```
 
