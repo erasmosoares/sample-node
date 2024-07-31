@@ -208,6 +208,12 @@ NODE_ENV=test
 npm test
 ```
 
+You can also check the current env by typeing:
+
+```
+echo $NODE_ENV
+```
+
 # Packages Installed
 
 ## Nodemon
