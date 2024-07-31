@@ -27,56 +27,105 @@ router.get('/', async (req, res) => {
 });
 
 router.post('/',
-[
-    // Order of these middleware matters.
-    // "upload" should come before other "validate" because we have to handle
-    // multi-part form data. Once the upload middleware from multer applied,
-    // request.body will be populated and we can validate it. This means
-    // if the request is invalid, we'll end up with one or more image files
-    // stored in the uploads folder. We'll need to clean up this folder
-    // using a separate process.
-    // auth,
-    upload.array("images", config.get("maxImageCount")),
-    imageResize,
-  ], auth, async (req, res) => {
-    const { error } = validate(req.body);
-    if (error) return res.status(400).send(error.details[0].message);
-
-    if(error instanceof multer.MulterError) return res.status(500).send("A Multer error occurred when uploading");
-
-    const book = new Book({ name: req.body.name });
+    [
+        // Order of these middleware matters.
+        // "upload" should come before other "validate" because we have to handle
+        // multi-part form data. Once the upload middleware from multer applied,
+        // request.body will be populated and we can validate it. This means
+        // if the request is invalid, we'll end up with one or more image files
+        // stored in the uploads folder. We'll need to clean up this folder
+        // using a separate process.
+        // auth,
+        upload.array("images", config.get("maxImageCount")),
+        imageResize,
+      ], auth, async (req, res) => {
+        const { error } = validate(req.body);
+        if (error){
+            console.error('Error adding book:', error.details[0].message);
+            return res.status(400).send("An unexpected error occurred");
+        } 
     
-    // Only process images if they are uploaded
-    if (req.files && req.files.length > 0) {
-        book.images = req.files.map((file) => ({ fileName: file.filename }));
+        if(error instanceof multer.MulterError) return res.status(500).send("A Multer error occurred when uploading");
+    
+        const book = new Book({ name: req.body.name });
+        
+        // Only process images if they are uploaded
+        if (req.files && req.files.length > 0) {
+            book.images = req.files.map((file) => ({ fileName: file.filename }));
+        }
+    
+        await book.save();
+        res.send(book);
+    });
+
+  router.put('/:id', [auth, validateObjectId], async (req, res) => {
+    try {
+      // Validate the request body
+      const { error } = validate(req.body);
+      if (error) {
+        return res.status(400).type('text').send(error.details[0].message);
+      }
+  
+      // Update the book by ID
+      const book = await Book.findByIdAndUpdate(
+        req.params.id,
+        { name: req.body.name, images: req.body.images },
+        { new: true }
+      );
+  
+      // Check if the book was found
+      if (!book) {
+        return res.status(404).type('text').send('The book with the given ID was not found.');
+      }
+  
+      // Send the updated book as JSON
+      res.type('json').send(book);
+    } catch (err) {
+      // Handle unexpected errors
+      console.error('Error updating book:', err);
+      res.status(500).type('text').send('An unexpected error occurred');
     }
+  });
 
-    await book.save();
-    res.send(book);
-});
+  router.delete('/:id', [auth, admin, validateObjectId], async (req, res) => {
+    try {
+      // Delete the book by ID
+      const book = await Book.findByIdAndDelete(req.params.id);
+  
+      // Check if the book was found
+      if (!book) {
+        return res.status(404).type('text').send('The book with the given ID was not found.');
+      }
+  
+      // Send the deleted book as JSON
+      res.type('json').send(book);
+    } catch (err) {
+      // Handle unexpected errors
+      console.error('Error deleting book:', err);
+      res.status(500).type('text').send('An unexpected error occurred');
+    }
+  });
 
-router.put('/:id', [auth, validateObjectId], async (req, res) => {
-    const { error } = validate(req.body);
-    if (error) return res.status(400).send(error.details[0].message);
-
-    const book = await Book.findByIdAndUpdate(req.params.id, { name: req.body.name, images: req.body.images }, { new: true });
-    if (!book) return res.status(404).send('The book with the given ID was not found.');
-
-    res.send(book);
-});
-
-router.delete('/:id', [auth, admin, validateObjectId], async (req, res) => {
-    const book = await Book.findByIdAndDelete(req.params.id);
-    if (!book) return res.status(404).send('The book with the given ID was not found.');
-
-    res.send(book);
-});
-
-router.get('/:id', validateObjectId, async (req, res) => {
-    const book = await Book.findById(req.params.id);
-    if (!book) return res.status(404).send('The book with the given ID was not found.');
-    const resource = bookMapper(book);
-    res.send(resource);
-});
+  router.get('/:id', validateObjectId, async (req, res) => {
+    try {
+      // Find the book by ID
+      const book = await Book.findById(req.params.id);
+  
+      // Check if the book was found
+      if (!book) {
+        return res.status(404).type('text').send('The book with the given ID was not found.');
+      }
+  
+      // Map the book to the desired format
+      const resource = bookMapper(book);
+  
+      // Send the book data as JSON
+      res.type('json').send(resource);
+    } catch (err) {
+      // Handle unexpected errors
+      console.error('Error retrieving book:', err);
+      res.status(500).type('text').send('An unexpected error occurred');
+    }
+  });
 
 module.exports = router;

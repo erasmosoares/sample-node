@@ -4,19 +4,33 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 
 router.post('/', async (req, res) => {
-    const { error } = validate(req.body);
-    if (error) return res.status(400).send(error.details[0].message);
-
-    let user = await User.findOne({ email: req.body.email });
-    if (!user) return res.status(400).send('Invalid email or password.');
-
-    /* Re-hash the password and compare*/
-    const validPassword = await bcrypt.compare(req.body.password, user.password);
-    if (!validPassword) return res.status(400).send('Invalid email or password.');
-
-    /* Generate a json web token */
-    const token = user.generateAuthToken();
-    res.send(token);
+    try {
+      // Validate request body
+      const { error } = validate(req.body);
+      if (error) {
+        return res.status(400).type('text').send(error.details[0].message);
+      }
+  
+      // Find user by email
+      let user = await User.findOne({ email: req.body.email });
+      if (!user) {
+        return res.status(400).type('text').send('Invalid email or password.');
+      }
+  
+      // Verify password
+      const validPassword = await bcrypt.compare(req.body.password, user.password);
+      if (!validPassword) {
+        return res.status(400).type('text').send('Invalid email or password.');
+      }
+  
+      // Generate a JSON Web Token
+      const token = user.generateAuthToken();
+      res.status(200).type('json').send(token);
+    } catch (err) {
+      // Handle unexpected errors
+      console.error('Error during login:', err);
+      res.status(500).type('text').send('An unexpected error occurred');
+    }
 });
 
 const Joi = require('joi');
