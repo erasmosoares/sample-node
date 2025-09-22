@@ -3,7 +3,7 @@ terraform {
 }
 
 variable "hello_message" {
-  default = "Testing terraform cloud"
+  default = "Testing terraform cloud!"
 }
 
 output "greeting" {
